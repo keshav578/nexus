@@ -5,14 +5,25 @@ services:
     image: sonatype/nexus3:latest
     container_name: nexus3
     ports:
-      - "8081:8081"
+      - "8081:8082"
+      - "8085:8085"
     environment:
       - NEXUS_CONTEXT=nexus
+      - NEXUS_HOSTNAME=localhost
     volumes:
-      - volume/nexus-data:/nexus-data
+      - ./volume/nexus-data:/nexus-data
     restart: unless-stopped
     networks:
       - nexus-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+volumes:
+  nexus-data: {}
 
 networks:
   nexus-network:
