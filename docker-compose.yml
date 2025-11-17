@@ -14,6 +14,6 @@ services:
     networks:
       - nexus-network
 
-  networks:
-    nexus-network:
+networks:
+  nexus-network:
     driver: bridge
