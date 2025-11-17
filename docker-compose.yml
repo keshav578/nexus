@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  nexus:
+    image: sonatype/nexus3:latest
+    container_name: nexus3
+    ports:
+      - "8081:8081"
+    environment:
+      - NEXUS_CONTEXT=nexus
+    volumes:
+      - volume/nexus-data:/nexus-data
+    restart: unless-stopped
+    networks:
+      - nexus-network
+
+  networks:
+    nexus-network:
+    driver: bridge
